@@ -1,0 +1,27 @@
+---
+
+- name: update apt cache
+  become: yes
+  apt:
+    update_cache=yes
+
+- name: update all apt packages to the latest version
+  become: yes
+  apt:
+    upgrade=dist
+
+- name: set timezone
+  become: yes
+  timezone:
+    name={{ timezone }}
+
+- name: install commonly used packages
+  become: yes
+  apt:
+    name={{ item }}
+    state=present
+  with_items:
+    - git
+    - subversion
+    - unzip
+    - vim

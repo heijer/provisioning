@@ -1,0 +1,22 @@
+---
+
+- name: create directories
+  file:
+    path={{ item }}
+    state=directory
+  with_items:
+    - ~/sources
+    - ~/sources/svn
+    - ~/sources/git
+
+- name: ubuntu
+  include: ubuntu.yml
+  when: ansible_os_family == "Debian"
+
+- name: clone dotfiles repository
+  git:
+    repo=https://github.com/SiggyF/dotfiles.git
+    dest=~/sources/git/dotfiles
+
+- name: install dotfiles
+  shell: ~/sources/git/dotfiles && ./bootstrap.sh

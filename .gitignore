@@ -1,0 +1,13 @@
+# Vagrant
+.vagrant/
+
+# Ansible files
+ansible.log
+*.retry
+
+# Pycharm
+.idea/
+.editorconfig
+
+# Mac files:
+.DS_Store
