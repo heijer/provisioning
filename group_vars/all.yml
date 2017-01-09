@@ -1,1 +1,2 @@
 timezone: Europe/Amsterdam
+ssh_user: '{{ ansible_user }}'

@@ -1,0 +1,19 @@
+---
+
+- name: make sure ~/.ssh directory exists
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: 0700
+
+- name: Generate SSH keys
+  shell: ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
+  args:
+    creates: ~/.ssh/id_rsa
+
+- name: create ~/.ssh/config file
+  template:
+    src: config.j2
+    dest: ~/.ssh/config
+    mode: 0600
+    backup: yes

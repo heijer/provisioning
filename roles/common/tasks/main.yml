@@ -20,3 +20,4 @@
 
 - name: install dotfiles
   shell: ~/sources/git/dotfiles && ./bootstrap.sh
+  ignore_errors: yes

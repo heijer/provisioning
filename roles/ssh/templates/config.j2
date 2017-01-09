@@ -1,0 +1,35 @@
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/tmp/%h_%p_%r
+    ControlPersist 600
+{% if ssh_user != ansible_user %}
+    User {{ ssh_user }}
+{% endif %}
+
+{% if ssh_host_list is defined %}
+{% for category in ssh_host_list %}
+## {{ category.description }}
+
+{% for host in category.hosts %}
+Host {{ host.shortname }}
+{% if host.comment is defined %}
+    # {{ host.comment }}
+{% endif %}
+    HostName {% if host.name is defined %}{{ host.name }}{% else %}{{ host.ip }}{% endif %}
+
+{% if host.user is defined %}
+    User {{ host.user }}
+{% endif %}
+{% if host.key is defined %}
+    IdentityFile {{ host.key }}
+{% endif %}
+{% if host.options is defined %}
+    {% for option in host.options %}
+{{ option.key }} {{ option.value }}
+    {% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% endfor %}
+{% endif %}
